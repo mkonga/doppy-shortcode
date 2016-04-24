@@ -39,9 +39,9 @@ interface HandledShortcodeInterface
      *
      * Use this when you want to change the content in your TagHandler.
      *
-     * @param string $content
+     * @param string|null $content
      */
-    public function overwriteContent($content);
+    public function overwriteContent($content = null);
 
     /**
      * The content that needs to be after the content between the tags
@@ -56,4 +56,11 @@ interface HandledShortcodeInterface
      * @return bool
      */
     public function parseContent();
+
+    /**
+     * Configures wheter the content should be parsed or not
+     *
+     * @param bool $parseContent
+     */
+    public function setParseContent($parseContent);
 }

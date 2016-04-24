@@ -64,7 +64,7 @@ class HandledShortcode implements HandledShortcodeInterface
         }
     }
 
-    public function overwriteContent($content)
+    public function overwriteContent($content = null)
     {
         $this->content = $content;
     }
@@ -76,6 +76,15 @@ class HandledShortcode implements HandledShortcodeInterface
 
     public function parseContent()
     {
-        return (($this->parseContent) && (mb_strlen($this->getContent(), 'utf-8') > 0));
+        return (
+            ($this->parseContent) &&
+            ($this->getContent() !== null) &&
+            (mb_strlen($this->getContent(), 'utf-8') > 0)
+        );
+    }
+
+    public function setParseContent($parseContent)
+    {
+        $this->parseContent = $parseContent;
     }
 }
