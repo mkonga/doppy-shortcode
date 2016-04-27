@@ -3,6 +3,7 @@
 namespace Doppy\Shortcode\TagHandler;
 
 use Doppy\Shortcode\HandledShortcode\HandledShortcode;
+use Doppy\Shortcode\Shortcode\ContentShortcode;
 use Doppy\Shortcode\Shortcode\ShortcodeInterface;
 
 class SimpleTagHandler extends AbstractTagHandler implements TagHandlerInterface
@@ -33,4 +34,10 @@ class SimpleTagHandler extends AbstractTagHandler implements TagHandlerInterface
             true
         );
     }
+
+    public function canHandle(ShortcodeInterface $shortcode, ShortcodeInterface $parentShortcode = null)
+    {
+        return ($shortcode instanceof ContentShortcode);
+    }
+
 }

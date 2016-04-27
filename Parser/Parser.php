@@ -401,6 +401,42 @@ class Parser implements ParserInterface
             $position += mb_strlen($token, 'utf-8');
         }
 
+        // when quotes are used, they might be escaped. Fix the tokens now
+        if ($this->syntax->getParameterValueDelimiter() == '"') {
+            $tokens = $this->fixTokenQuotes($tokens);
+        }
+
+        return $tokens;
+    }
+
+    /**
+     * Fixes &quot; tokens from 3 parts into a single one.
+     *
+     * @param array $tokens
+     *
+     * @return array
+     *
+     * @todo: maybe refactor this to something more generic.
+     */
+    private function fixTokenQuotes($tokens) {
+        $fixed = false;
+        foreach ($tokens as $key => $token) {
+            // if the token equals "&"
+            if ($token[0] == 6 && $token[1] == '&') {
+                // and the following text equals "quot" and ";"
+                if (($tokens[$key + 1][0] == 6 && $tokens[$key + 1][1] == 'quot') && ($tokens[$key + 2][0] == 6 && $tokens[$key + 2][1] == ';')) {
+                    // merge them into one.
+                    $tokens[$key][0] = self::TOKEN_DELIMITER;
+                    $tokens[$key][1] = '&quot;';
+                    unset($tokens[$key + 1]);
+                    unset($tokens[$key + 2]);
+                    $fixed = true;
+                }
+            }
+        }
+        if ($fixed) {
+            $tokens = array_values($tokens);
+        }
         return $tokens;
     }
 
