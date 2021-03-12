@@ -1,6 +1,7 @@
 {
     "name"       : "doppy/shortcode",
     "description": "Shortcode/BBCode parser",
+    "abandoned"  : true,
     "keywords"   : [
         "bbcode",
         "shortcode",
